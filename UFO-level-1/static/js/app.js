@@ -32,8 +32,9 @@ function runEnter() {
   
     //start to build the results table
     var tbody = d3.select("tbody");
+
     //if there is already a table displayed, remove those rows
-    //var elmtTable = document.getcreateElement('tbody');
+    tbody.html("");
     //tbody.detach( "tr" );
     
     filteredData.forEach((ufoSighting) => {
