@@ -1,10 +1,16 @@
-// from data.js
+// grab data from data.js source file
 var tableData = data;
 
 // table body variable should be global
 var tbody = d3.select("tbody");
 
-//build a table based on the filtered data
+//create and initialize an array of the filters that will be customized
+filters = {};
+
+
+///////////////////////////////////////////
+//build a table the size of the filtered dataset
+////////////////////////////////////////////
 function buildTable(data) {
     //clear any existing data from the table
     tbody.html("");
@@ -18,34 +24,55 @@ function buildTable(data) {
             });
         });
 };
+/////////////////////////////////////////////
+//end building table
+/////////////////////////////////////////////
 
-// Complete the event handler function for the form
+//////////////////////////////////////////////
+// Identify which filters to apply and add them to the array of filters
+//////////////////////////////////////////////
 function runEnter() {
 
     // Prevent the page from refreshing
     d3.event.preventDefault();
     
-    //get the list of filters
+    //build a list of filters because some may be left empty
+    //get the element, value and id of the filter
+    var inputElement = d3.select(this).select("input");
+    var inputElementValue = inputElement.property("value");
+    var inputElementId = inputElement.attr("id");
+  
+    // if a filter was selected, add it to the array.  Otherwise delete that filter from the array
+    if (inputElementValue) {
+        filters[inputElementId] = inputElementValue;
+    }
+    else {
+        delete filters[inputElementId];
+    };
+    // rebuild the data table
+    console.log(filters);
+    filteredData();
 
-    // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime");
-    var inputCity = d3.select("#city");
-  
-    // Get the value property of the input element
-    var inputValue = inputElement.property("value");
-    var inputValueCity = inputCity.property("value");
-  
-    console.log(inputValue);
-    console.log(inputValueCity);
-    console.log(tableData);
-  
-    var filteredData = tableData.filter(i => i.datetime === inputValue);
-    var filteredData2 = filteredData.filter(i => i.city.toLowerCase() === inputValueCity.toLowerCase());
-  
-    console.log(filteredData);
-    console.log(filteredData2);  
-};
+}
+//////////////////////////////////////
+//filters array built
+/////////////////////////////////////
+
+////////////////////////////////////
+// filter the dataset based on the filters array
+/////////////////////////////////////
+function filteredData() {
+    let filteredTable = tableData;
+    //loop through the filtered array and apply the filters one at a time
+    Object.entries(filters).forEach(([key, value]) => {
+        filteredTable = filteredTable.filter(row => row[key] === value);
+    });
+    //build the table function
+    console.log("filtereed Table ${filteredTable}");
+    buildTable(filteredTable);
+}
 
 // Event handler
-d3. SelectAll(".filter").on("change", runEnter);
+d3.selectAll(".filter").on("change", runEnter);
+
 
