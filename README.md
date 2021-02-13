@@ -11,3 +11,11 @@ The user can enter a date in the indicated box.  NOTE that valid data is current
 
 When the Filter Table button is pressed, the table will load with the relevant data:
 ![](/UFO-level-1/screenshots/filtereddata.png)
+
+For the bonus, the code was converted into separate functions for:
+    - creating and building an array of filter input
+    - applying the filter to the dataset
+    - building the html table.
+The user can select how to filter the dataset based on date, city, state, country or UFO shape, or any combination thereof.
+The filter screen appears as follows:
+![](/UFO-level-2/screenshots/multiplefilter.png)
