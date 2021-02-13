@@ -18,7 +18,7 @@ function buildTable(data) {
     //loop through objects and append rows and cells for each value
     data.forEach((dataRow) => {
         var row = tbody.append("tr");
-        Object.values(dataRow).forEach(([key, value]) => {
+        Object.values(dataRow).forEach((value) => {
             var cell = row.append("td");
             cell.text(value);
             });
@@ -68,7 +68,7 @@ function filteredData() {
         filteredTable = filteredTable.filter(row => row[key] === value);
     });
     //build the table function
-    console.log("filtereed Table ${filteredTable}");
+    console.log(filteredTable);
     buildTable(filteredTable);
 }
 
